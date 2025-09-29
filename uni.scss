@@ -1,0 +1,84 @@
+// 主题色
+$primary-color: #00ff88;
+$secondary-color: #667eea;
+$danger-color: #ff4444;
+$warning-color: #ffaa00;
+$success-color: #00ff88;
+$info-color: #00bfff;
+
+// 背景色
+$bg-primary: #000000;
+$bg-secondary: #1a1a1a;
+$bg-tertiary: #2a2a2a;
+$bg-overlay: rgba(0, 0, 0, 0.5);
+
+// 文字色
+$text-primary: #ffffff;
+$text-secondary: #cccccc;
+$text-tertiary: #888888;
+$text-muted: #666666;
+
+// 边框色
+$border-color: #333333;
+$border-light: #444444;
+
+// 尺寸
+$spacing-xs: 5px;
+$spacing-sm: 10px;
+$spacing-md: 15px;
+$spacing-lg: 20px;
+$spacing-xl: 30px;
+
+// 圆角
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 20px;
+$radius-full: 9999px;
+
+// 字体大小
+$font-xs: 12px;
+$font-sm: 14px;
+$font-md: 16px;
+$font-lg: 18px;
+$font-xl: 20px;
+$font-xxl: 24px;
+
+// 动画时长
+$animation-fast: 0.2s;
+$animation-normal: 0.3s;
+$animation-slow: 0.5s;
+
+// 全局混合样式
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@mixin text-ellipsis($lines: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @if $lines == 1 {
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+  }
+}
+
+// 渐变背景
+@mixin gradient-primary {
+  background: linear-gradient(135deg, $secondary-color 0%, #764ba2 100%);
+}
+
+@mixin gradient-dark {
+  background: linear-gradient(180deg, $bg-secondary 0%, $bg-primary 100%);
+}

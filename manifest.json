@@ -1,0 +1,80 @@
+{
+    "name" : "HarmonyVideoPlayer",
+    "appid" : "__UNI__HVP0001",
+    "description" : "鸿蒙竖屏视频播放器",
+    "versionName" : "1.0.0",
+    "versionCode" : 100,
+    "transformPx" : false,
+    "app-plus" : {
+        "harmony" : {
+            "bundleName" : "com.videoapp.harmonyvideoplayer",
+            "versionName" : "1.0.0",
+            "versionCode" : 100,
+            "compatible" : {
+                "apiVersion" : 12,
+                "releaseType" : "Release"
+            },
+            "permissions" : [
+                "ohos.permission.READ_MEDIA",
+                "ohos.permission.WRITE_MEDIA",
+                "ohos.permission.MEDIA_LOCATION",
+                "ohos.permission.INTERNET",
+                "ohos.permission.GET_NETWORK_INFO"
+            ],
+            "orientation" : "portrait"
+        },
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        "modules" : {
+            "VideoPlayer" : {}
+        },
+        "distribute" : {
+            "android" : {
+                "permissions" : [
+                    "android.permission.READ_EXTERNAL_STORAGE",
+                    "android.permission.WRITE_EXTERNAL_STORAGE"
+                ]
+            }
+        }
+    },
+    "quickapp" : {},
+    "mp-weixin" : {
+        "appid" : "",
+        "setting" : {
+            "urlCheck" : false
+        }
+    },
+    "mp-alipay" : {
+        "usingComponents" : true
+    },
+    "mp-baidu" : {
+        "usingComponents" : true
+    },
+    "mp-toutiao" : {
+        "usingComponents" : true
+    },
+    "uniStatistics" : {
+        "enable" : false
+    },
+    "vueVersion" : "3",
+    "app-harmony" : {
+        "distribute" : {
+            "bundleName" : "hm.verticalSwitcher.vidPlayer",
+            "signingConfigs" : {
+                "default" : {
+                    "certpath" : "c:\\Users\\10277\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1759138063316.cer",
+                    "keyAlias" : "debugKey",
+                    "keyPassword" : "0000001B35A6C75A9614184907A2031A11587D881EC711D2062EEBC4EDAACE1A0629CCB5DFD4251ACC1083",
+                    "profile" : "c:\\Users\\10277\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1759138063316.p7b",
+                    "signAlg" : "SHA256withECDSA",
+                    "storeFile" : "c:\\Users\\10277\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1759138063316.p12",
+                    "storePassword" : "0000001B35A6C75A9614184907A2031A11587D881EC711D2062EEBC4EDAACE1A0629CCB5DFD4251ACC1083"
+                }
+            }
+        }
+    }
+}

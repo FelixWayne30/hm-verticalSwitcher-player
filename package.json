@@ -1,0 +1,23 @@
+{
+  "name": "harmony-video-player",
+  "version": "1.0.0",
+  "description": "鸿蒙竖屏视频播放器",
+  "main": "main.js",
+  "scripts": {
+    "dev": "npm run dev:h5",
+    "dev:h5": "uni",
+    "dev:harmony": "uni build --watch"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "latest",
+    "@dcloudio/uni-h5": "latest",
+    "@dcloudio/uni-mp-weixin": "latest",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@dcloudio/uni-cli-shared": "latest",
+    "@dcloudio/vite-plugin-uni": "latest",
+    "vite": "4.4.9"
+  }
+}
