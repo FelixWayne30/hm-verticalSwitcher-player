@@ -38,7 +38,20 @@
         "navigationBarBackgroundColor": "#1a1a1a",
         "backgroundColor": "#000000"
       }
+    },
+{
+  "path": "pages/tiktok/tiktokPlayer",
+  "style": {
+    "navigationStyle": "custom",
+    "app-plus": {
+      "titleNView": false,
+      "bounce": "none",
+      "scrollIndicator": "none"
     }
+  }
+}
+
+
   ],
   "globalStyle": {
     "navigationBarTextStyle": "white",
