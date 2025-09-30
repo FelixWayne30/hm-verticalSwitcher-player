@@ -1,5 +1,5 @@
 {
-    "name" : "HarmonyVideoPlayer",
+    "name" : "树览视频",
     "appid" : "__UNI__HVP0001",
     "description" : "鸿蒙竖屏视频播放器",
     "versionName" : "1.0.0",
@@ -76,8 +76,11 @@
                 }
             },
             "icons" : {
-                "foreground" : "E:/浏览器下载/ChatGPT Image 2025年9月30日 09_36_02.png",
-                "background" : "E:/浏览器下载/ChatGPT Image 2025年9月30日 09_36_02.png"
+                "foreground" : "E:/浏览器下载/ChatGPT Image 2025年9月30日 09_55_53.png",
+                "background" : "E:/浏览器下载/ChatGPT Image 2025年9月30日 09_55_53.png"
+            },
+            "splashScreens" : {
+                "startWindowIcon" : "E:/浏览器下载/ChatGPT Image 2025年9月30日 09_36_02.png"
             }
         }
     }
