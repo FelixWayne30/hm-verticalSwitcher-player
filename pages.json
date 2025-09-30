@@ -4,9 +4,15 @@
       "path": "pages/index/index",
       "style": {
         "navigationStyle": "custom",
-        "navigationBarTextStyle": "white",
+        "navigationBarTextStyle": "black",
         "navigationBarBackgroundColor": "#FFFFFF",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#F5F5F7",
+        "app-plus": {
+          "titleNView": false,
+          "statusbar": {
+            "background": "#FFFFFF"
+          }
+        }
       }
     },
     {
@@ -15,7 +21,13 @@
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black",
         "navigationBarBackgroundColor": "#FFFFFF",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#FFFFFF",
+        "app-plus": {
+          "titleNView": false,
+          "statusbar": {
+            "background": "#FFFFFF"
+          }
+        }
       }
     },
     {
@@ -27,7 +39,11 @@
         "app-plus": {
           "titleNView": false,
           "bounce": "none",
-          "scrollIndicator": "none"
+          "scrollIndicator": "none",
+          "statusbar": {
+            "background": "#000000",
+            "immersed": "supportedDevice"
+          }
         }
       }
     }

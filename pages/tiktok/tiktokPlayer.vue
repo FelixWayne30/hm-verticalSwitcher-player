@@ -1,5 +1,5 @@
 <template>
-  <view class="player-container" :style="{ paddingTop: '0px' }">
+  <view class="player-container">
     <!-- 视频滑动容器 -->
     <swiper
       class="video-swiper"
@@ -66,27 +66,11 @@
           </view>
         </view>
 
-        <!-- 倍速指示器 -->
+        <!-- 简化的倍速指示器 - 只显示圆形和倍速值 -->
         <view class="speed-indicator" v-if="currentSpeed !== 1">
           <view class="speed-circle">
             <text class="speed-value">{{ currentSpeed }}</text>
             <text class="speed-unit">×</text>
-          </view>
-          <view class="speed-bar">
-            <view class="speed-track"></view>
-            <view 
-              class="speed-fill" 
-              :style="{ width: getSpeedBarWidth() }"
-              :class="{ slow: currentSpeed < 1, fast: currentSpeed > 1 }"
-            />
-            <view class="speed-markers">
-              <view class="marker" :class="{ active: currentSpeed === 0.25 }">0.25</view>
-              <view class="marker" :class="{ active: currentSpeed === 0.5 }">0.5</view>
-              <view class="marker center" :class="{ active: currentSpeed === 1 }">1</view>
-              <view class="marker" :class="{ active: currentSpeed === 2 }">2</view>
-              <view class="marker" :class="{ active: currentSpeed === 3 }">3</view>
-              <view class="marker" :class="{ active: currentSpeed === 4 }">4</view>
-            </view>
           </view>
         </view>
 
@@ -126,8 +110,8 @@ export default {
       
       // 倍速控制
       currentSpeed: 1,
-      allSpeedSteps: [0.25, 0.5, 1, 2, 3, 4], // 所有可用速度
-      currentSpeedIndex: 2, // 初始1.0对应索引2
+      allSpeedSteps: [0.25, 0.5, 1, 2, 3, 4],
+      currentSpeedIndex: 2,
       speedMode: null,
       
       // 控制栏自动隐藏
@@ -144,7 +128,6 @@ export default {
     this.setFullScreen()
   },
   onReady() {
-    // 页面渲染完成后再次确保全屏
     this.setFullScreen()
   },
   onShow() {
@@ -163,51 +146,44 @@ export default {
   },
   methods: {
     setFullScreen() {
-      // 隐藏状态栏实现全屏
       // #ifdef APP-PLUS
       try {
-        // 获取当前webview
         const currentWebview = plus.webview.currentWebview()
         if (currentWebview) {
-          // 设置webview为沉浸式
+          // 设置全屏沉浸式窗口
           currentWebview.setStyle({
-            titleNView: false,
             statusbar: {
               background: '#000000'
-            }
+            },
+            // 隐藏标题栏
+            titleNView: false
           })
         }
         
-        // 设置全屏
-        if (plus.navigator && plus.navigator.setFullscreen) {
-          plus.navigator.setFullscreen(true)
-        }
-        
-        // 隐藏状态栏
-        if (plus.navigator && plus.navigator.hideSystemNavigation) {
-          plus.navigator.hideSystemNavigation()
-        }
-        
-        // 设置状态栏为深色内容（白色图标）
-        if (plus.navigator && plus.navigator.setStatusBarStyle) {
-          plus.navigator.setStatusBarStyle('dark')
-        }
-        
-        // 设置状态栏背景为黑色
-        if (plus.navigator && plus.navigator.setStatusBarBackground) {
-          plus.navigator.setStatusBarBackground('#000000')
+        // 鸿蒙和Android平台设置全屏
+        if (plus.navigator) {
+          // 设置全屏模式
+          if (plus.navigator.setFullscreen) {
+            plus.navigator.setFullscreen(true)
+          }
+          
+          // 设置状态栏为深色模式（白色图标和文字）
+          if (plus.navigator.setStatusBarStyle) {
+            plus.navigator.setStatusBarStyle('dark')
+          }
+          
+          // 设置状态栏背景为黑色
+          if (plus.navigator.setStatusBarBackground) {
+            plus.navigator.setStatusBarBackground('#000000')
+          }
         }
       } catch (e) {
         console.log('setFullScreen error:', e)
       }
       // #endif
-      
-      // 通用平台隐藏导航栏
-      uni.hideNavigationBarLoading()
     },
     
     restoreStatusBar() {
-      // 恢复状态栏
       // #ifdef APP-PLUS
       try {
         // 取消全屏
@@ -215,17 +191,12 @@ export default {
           plus.navigator.setFullscreen(false)
         }
         
-        // 显示系统导航栏
-        if (plus.navigator && plus.navigator.showSystemNavigation) {
-          plus.navigator.showSystemNavigation()
-        }
-        
-        // 恢复状态栏样式
+        // 恢复状态栏样式为浅色（深色图标和文字）
         if (plus.navigator && plus.navigator.setStatusBarStyle) {
           plus.navigator.setStatusBarStyle('light')
         }
         
-        // 恢复状态栏背景
+        // 恢复状态栏背景为白色
         if (plus.navigator && plus.navigator.setStatusBarBackground) {
           plus.navigator.setStatusBarBackground('#FFFFFF')
         }
@@ -317,13 +288,10 @@ export default {
         return
       }
       
-      // 倍速播放中，左右滑动切换档位
       if (this.isPressing && Math.abs(deltaX) > 40) {
         if (deltaX < 0) {
-          // 向左滑动 - 降低速度
           this.switchSpeedGear(-1)
         } else {
-          // 向右滑动 - 提高速度
           this.switchSpeedGear(1)
         }
         this.touchStartX = touch.pageX
@@ -347,15 +315,12 @@ export default {
       this.isPressing = true
       this.speedMode = zone
       
-      // 根据区域设置初始速度
       if (zone === 'left') {
         this.isLeftPressed = true
-        // 慢速从0.5开始
-        this.currentSpeedIndex = 1 // 0.5
+        this.currentSpeedIndex = 1
       } else {
         this.isRightPressed = true
-        // 快速从2开始
-        this.currentSpeedIndex = 3 // 2
+        this.currentSpeedIndex = 3
       }
       
       this.currentSpeed = this.allSpeedSteps[this.currentSpeedIndex]
@@ -366,16 +331,13 @@ export default {
     switchSpeedGear(direction) {
       const newIndex = this.currentSpeedIndex + direction
       
-      // 限制索引范围：0.25(0) 到 4(5)
       if (newIndex >= 0 && newIndex < this.allSpeedSteps.length) {
-        // 左侧区域：只能在慢速范围 (0.25, 0.5)
         if (this.speedMode === 'left' && newIndex <= 1) {
           this.currentSpeedIndex = newIndex
           this.currentSpeed = this.allSpeedSteps[newIndex]
           this.setVideoSpeed(this.currentSpeed)
           this.vibrate()
         }
-        // 右侧区域：只能在快速范围 (2, 3, 4)
         else if (this.speedMode === 'right' && newIndex >= 3 && newIndex <= 5) {
           this.currentSpeedIndex = newIndex
           this.currentSpeed = this.allSpeedSteps[newIndex]
@@ -411,22 +373,13 @@ export default {
     },
 
     vibrate() {
-      // 添加错误处理
       try {
         if (uni.vibrateShort) {
           uni.vibrateShort({ type: 'light' })
         }
       } catch (e) {
-        // 静默失败，不影响功能
         console.log('vibrate not supported')
       }
-    },
-
-    getSpeedBarWidth() {
-      // 根据当前速度计算进度条宽度
-      const index = this.currentSpeedIndex
-      const total = this.allSpeedSteps.length - 1
-      return (index / total * 100) + '%'
     },
 
     resetPlayBtnTimer() {
@@ -581,18 +534,26 @@ export default {
   font-weight: 700;
 }
 
-/* 倍速指示器 */
+/* 简化的倍速指示器 - 只保留圆形显示 */
 .speed-indicator {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32rpx;
   z-index: 20;
   pointer-events: none;
+  animation: scaleIn 0.2s ease;
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0; 
+    transform: translate(-50%, -50%) scale(0.8); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translate(-50%, -50%) scale(1); 
+  }
 }
 
 .speed-circle {
@@ -620,60 +581,6 @@ export default {
   margin-left: 4rpx;
 }
 
-.speed-bar {
-  width: 500rpx;
-  display: flex;
-  flex-direction: column;
-  gap: 12rpx;
-}
-
-.speed-track {
-  width: 100%;
-  height: 8rpx;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4rpx;
-  position: relative;
-}
-
-.speed-fill {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  border-radius: 4rpx;
-  transition: width 0.2s ease, background 0.2s;
-}
-
-.speed-fill.slow {
-  background: linear-gradient(90deg, #FF6B6B 0%, #FFE66D 100%);
-}
-
-.speed-fill.fast {
-  background: linear-gradient(90deg, #4FACFE 0%, #00F2FE 100%);
-}
-
-.speed-markers {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 4rpx;
-}
-
-.marker {
-  font-size: 20rpx;
-  color: rgba(255, 255, 255, 0.5);
-  transition: all 0.2s;
-}
-
-.marker.active {
-  color: #FFFFFF;
-  font-weight: 700;
-  transform: scale(1.2);
-}
-
-.marker.center {
-  color: rgba(255, 255, 255, 0.7);
-}
-
 /* 播放/暂停按钮 */
 .play-pause-btn {
   position: absolute;
@@ -698,7 +605,6 @@ export default {
   height: 48rpx;
 }
 
-/* Play Icon */
 .play-pause-icon::before {
   content: '';
   position: absolute;
@@ -712,7 +618,6 @@ export default {
   border-bottom: 24rpx solid transparent;
 }
 
-/* Pause Icon */
 .play-pause-icon.playing::before {
   border: none;
   width: 10rpx;

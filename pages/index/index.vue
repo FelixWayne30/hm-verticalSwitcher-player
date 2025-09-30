@@ -1,7 +1,10 @@
 <template>
   <view class="container">
-    <!-- 顶部导航栏 - 适配状态栏 -->
-    <view class="navbar" :style="{ paddingTop: statusBarHeight + 'px' }">
+    <!-- 状态栏占位 -->
+    <view class="status-bar"></view>
+    
+    <!-- 顶部导航栏 -->
+    <view class="navbar">
       <text class="app-title">我的视频</text>
       <view class="nav-actions">
         <view class="icon-btn" @click="goFolder">
@@ -104,19 +107,37 @@ export default {
       inputValue: '',
       inputLabel: '新建列表',
       editingId: null,
-      statusBarHeight: 44,
       showActionMenu: false,
       selectedPlaylist: null
     }
   },
   onLoad() {
-    const systemInfo = uni.getSystemInfoSync()
-    this.statusBarHeight = systemInfo.statusBarHeight || 44
+    // 设置状态栏为深色（黑色图标和文字）
+    this.setStatusBarStyle()
   },
   onShow() {
     this.load()
+    this.setStatusBarStyle()
   },
   methods: {
+    setStatusBarStyle() {
+      // #ifdef APP-PLUS
+      try {
+        // 设置状态栏为浅色模式（深色图标和文字）
+        if (plus.navigator && plus.navigator.setStatusBarStyle) {
+          plus.navigator.setStatusBarStyle('light')
+        }
+        
+        // 设置状态栏背景为白色
+        if (plus.navigator && plus.navigator.setStatusBarBackground) {
+          plus.navigator.setStatusBarBackground('#FFFFFF')
+        }
+      } catch (e) {
+        console.log('setStatusBarStyle error:', e)
+      }
+      // #endif
+    },
+    
     load() {
       this.playlists = videoManager.getPlaylists()
     },
@@ -200,6 +221,12 @@ export default {
   background: #F5F5F7;
   display: flex;
   flex-direction: column;
+}
+
+/* 状态栏占位 */
+.status-bar {
+  height: var(--status-bar-height);
+  background: #FFFFFF;
 }
 
 /* 导航栏 */
