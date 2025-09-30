@@ -74,6 +74,10 @@
                     "storeFile" : "c:\\Users\\10277\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1759138063316.p12",
                     "storePassword" : "0000001B35A6C75A9614184907A2031A11587D881EC711D2062EEBC4EDAACE1A0629CCB5DFD4251ACC1083"
                 }
+            },
+            "icons" : {
+                "foreground" : "E:/浏览器下载/ChatGPT Image 2025年9月30日 09_36_02.png",
+                "background" : "E:/浏览器下载/ChatGPT Image 2025年9月30日 09_36_02.png"
             }
         }
     }
